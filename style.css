@@ -1,0 +1,51 @@
+#searchBar {
+  margin: 15px 10px;
+}
+
+.tableWrapper {
+  /*max-height: 1000px;*/
+  overflow: auto;
+}
+
+.fade-scale {
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transition: all .25s linear;
+  -o-transition: all .25s linear;
+  transition: all .25s linear;
+}
+
+.fade-scale.in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hoverbtn {
+  display: none;
+}
+
+.therow:hover .hoverbtn {
+  display: block;
+}
+
+.row-pad {
+  background-color: #00529B;
+  padding: 20px;
+}
+
+.space {
+  padding: 18px;
+}
+
+.orange {
+  font-style: normal;
+  font-variant-ligatures: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  font-size: 34px;
+  line-height: 38px;
+  font-family: gentona, Georgia, serif;
+  color: #BE571C;
+}

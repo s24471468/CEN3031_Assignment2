@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body ng-app="directoryApp">
+  <div class="container-fluid">
+    <div class="row row-pad">
+      <h1 class="text-center orange"><strong>UF DIRECTORY APP</strong></h1>
+    </div>
+  </div>
+    <div class="container">
+      <div class="row" ng-controller="ListingsController">
+        <div class="col-md-12">
+          <div class="input-group" id="searchBar">
+            <!-- 
+
+                Implement a way to filter through listings using the search bar 
+
+              -->
+            <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control" placeholder="Search" ng-model="search">
+
+            <div class="modal fade" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title orange">Add Listing</h3>
+                  </div>
+                  <form>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="code">Code</label>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="Building Code" ng-model="code">
+                      </div><br>
+                      <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Building Name" ng-model="name">
+                      </div><br>
+                      <div class="form-group">
+                        <label for="latitude">Coordinates</label>
+                        <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" ng-model="latitude"><br>
+                        <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude" ng-model="longitude">
+                      </div><br>
+                      <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" ng-model="address">
+                      </div><br>
+                    </div>
+                  </form>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="addListing()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="tableWrapper">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th><strong>Code</strong></th>
+                <th><strong>Building Name</strong></th>
+                <th><div class="space"></div></th>
+                <th>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </th>
+              </tr>
+              <tr ng-repeat="listing in listings | filter:search" ng-click="showDetails(listing)" class="therow">
+                <th>{{listing.code}}</th>
+                <th>{{listing.name}}</th>
+                <th>
+                  <div class="hoverbtn">
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#info">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </button>
+                  </div>
+                </th>
+                <th>
+                  <div class="hoverbtn">
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="deleteListing($index)">
+                      <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                  </div>
+                </th>
+              </tr>
+              <!-- 
+
+                  Fill in the rest of the table:
+                      * populate the rows with the code and name of each listing
+                      * include a way to remove individual listings
+
+                --> 
+            </table>
+          </div>
+          <!-- 
+
+              Write an HTML form that adds new listings to the directory 
+
+            -->
+        </div>
+        <div class="modal fade-scale" id="info">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title orange">Additional Information</h2>
+              </div>
+              <div class="modal-body">
+                <h3 ng-if="detailedInfo.code != undefined">Building Code</h3>
+                <h5 ng-if="detailedInfo.code != undefined">{{detailedInfo.code}}</h5>
+
+                <h3 ng-if="detailedInfo.name != undefined">Building Name</h3>
+                <h5 ng-if="detailedInfo.name != undefined">{{detailedInfo.name}}</h5>
+
+                <h3 ng-if="detailedInfo.coordinates.latitude">Coordinates</h3>
+                <h5 ng-if="detailedInfo.coordinates.latitude">{{detailedInfo.coordinates.latitude + ", " + detailedInfo.coordinates.longitude}}</h5>
+
+                <h3 ng-if="detailedInfo.address != undefined">Address</h3>
+                <h5 ng-if="detailedInfo.address != undefined">{{detailedInfo.address}}</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://code.angularjs.org/1.4.3/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="listingController.js"></script>
+    <script src="listingFactory.js"></script>
+  </body>
+</html>
